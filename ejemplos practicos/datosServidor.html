@@ -1,0 +1,78 @@
+<style>
+    *{margin: 0; padding: 0; box-sizing: border-box;}
+    body{ background-color: #6495ed;}
+    h1{ text-align: center; margin: 1.2rem auto;}
+    .materias{
+        margin: 1rem;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+        gap: 1em;
+    }
+    .materia{
+        background-color: #2f4f4f;
+        text-align: center;
+        display: inline-block;
+        padding: .5rem;
+        border-radius: 5px;
+    }
+    .materia h2{
+        font-size: 1.6rem;
+    }
+</style>
+<!-- HTML-->
+<title>Materias</title>
+<body>
+    <h1>Materias</h1>
+    <div class="materias"></div>
+</body>
+
+<script>
+    const materiasHTML = document.querySelector('.materias')
+
+    const materias = [
+        {
+            name: 'Fisica',
+            nota: '3'
+        },
+        {
+            name: 'Matematicas',
+            nota: '8'
+        },
+        {
+            name: 'Quimica',
+            nota: '10'
+        },
+        {
+            name: 'Estructura de datos',
+            nota: '2'
+        }
+    ];
+
+    const getMateria = (id) =>{
+        return new Promise((resolve, reject) =>{
+            let materia = materias[id]
+
+            if(materia == undefined) reject('Error: materia incorrecta')
+            else setTimeout(() =>{
+                resolve(materia)
+            }, Math.random()*400); //Retraso y retorno
+        })
+    }
+
+    const returnMaterias = async () =>{
+        let matria = null
+        let renderHTML = ''
+        for(let i = 0; i < materias.length; i++){
+            materia = await getMateria(i)
+
+            renderHTML += `
+                <div class="materia">
+                    <h2 class="name">${materia.name}</h2>
+                    <div class="note">${materia.nota}</div>
+                </div>
+            `
+        }
+        materiasHTML.innerHTML = renderHTML
+    }
+    returnMaterias()
+</script>

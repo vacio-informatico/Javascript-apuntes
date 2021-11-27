@@ -1,0 +1,115 @@
+<style>
+    body{
+        background-color: #7fffd4;
+    }
+
+    form{
+        background-color: #48e;
+        text-align: center;
+        width: 88%;
+        margin: 1em 6%;
+        padding: 1rem 0;
+        border-radius: 6px;
+    }
+    input{
+        border: none;
+    }
+    input[type="button"]{
+        width: auto;
+    }
+</style>
+<style>
+    .modal-container{
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        background-color: #100b4ec5;
+        position: absolute;
+
+        top: 0;
+        left: 0;
+        opacity: 0;
+        display: none;
+    }
+    .modal{
+        background-color: #48e;
+        text-align: center;
+        width: 10rem;
+        margin: auto;
+        padding: 1.3rem;
+        border-radius: 7px;
+    }
+    .modal h3{
+        font-size: 1.7em;
+        margin: 1em auto;
+    }
+    .modal .result{
+        font-size: 1.2em;
+    }
+    @keyframes view{
+        0% {
+            opacity: 0;
+            display: flex;
+        }
+        100% {
+            opacity: 1;
+            display: flex;
+        }
+    }
+</style>
+<!-- HTML-->
+<body>
+    <div class="modal-container">
+        <div class="modal">
+            <h3 >Resultado</h3>
+            <div class="result"></div>
+        </div>
+    </div>
+    <form>
+        <h2>Introduce la nota final</h2>
+        <input type="number" id="number" placeholder="Nota">
+        <input type="button" id="send" value="Enviar">
+    </form>
+</body>
+
+<script>
+    
+    const btn = document.getElementById('send')
+
+    btn.addEventListener('click', ()=>{
+        let result = '', message = '', endResult = null;
+        try {
+            result = parseInt(document.getElementById('number').value)
+            if(isNaN(result)) throw "Letra";
+
+            endResult = verification(6, 8, result)
+            
+            if(endResult[0]){
+                message = 'Aprovado'
+            } else{
+                message = 'Desaprovado'
+            }
+        } catch(e){
+            result = "Introdujo letras"
+        }
+        openModal(endResult[1], message)
+        
+    })
+    /** saca el promedio y varifica si se aprueva*/
+    const verification = (one, two, three)=>{
+        const res = (one + two + three)/3;
+        if(res >= 1 && res <= 6){
+            return [false, res]
+        }
+        return [true, res]
+    }
+    /** Renderiza el modal y sus datos*/
+    const openModal = (res, smg) =>{
+        document.querySelector('.result').innerHTML = `${smg} con: ${res}`
+        let modal = document.querySelector('.modal-container')
+        modal.style.display = 'flex'
+        modal.style.animation = 'view 1s forwards'
+
+        console.info(smg, 'con: ', res)
+    }
+</script>

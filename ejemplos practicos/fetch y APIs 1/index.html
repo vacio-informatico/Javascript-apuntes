@@ -1,0 +1,100 @@
+<style>
+    body{
+        margin: 0;
+        background-color: #1C1F26;    
+    }
+    .btn-container{
+        margin: 1rem .5rem;
+    }
+    .btn{
+        cursor: pointer;
+        margin-right: .5rem;
+        border: none;
+        padding: .3em .4em;
+    }
+    /* Container*/
+    .red{
+        background-color: rgba(165, 42, 42, 0.712);
+    }
+    .container{
+        margin: .5em;
+        padding: 2vw 1vw;
+        max-width: 100%;
+    }
+    .container .name-div{
+        background-color: #6494ed;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        width: auto;
+        margin: .2rem;
+        padding: .3rem;
+        display: inline-block;
+    }
+    .container .age-div{
+        background-color: #b22222;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        width: auto;
+        margin : .2rem;
+        padding: .3rem;
+        display: inline-block;
+    }
+</style>
+<!-- HTML-->
+<title>Datos simples</title>
+<body>
+    <header class="btn-container">
+        <button class="btn" id="btn-name">Nombre</button>
+        <button class="btn" id="btn-age">Edad</button>
+        <button class="btn" id="clear">Limpiar</button>
+    </header>
+    <div class="container" id="container">
+    </div>
+</body>
+<!-- JS-->
+<script>
+    const container = document.getElementById('container')
+    const btnName = document.getElementById('btn-name')
+    btnName.addEventListener('click', () =>{
+        getName()
+    })
+    const btnAge = document.getElementById('btn-age')
+    btnAge.addEventListener('click', () =>{
+        getAge()
+    })
+    document.getElementById('clear').addEventListener('click', () =>{
+        container.innerHTML = ''
+    })
+    
+    /** Obtiene el nombre y lo renderiza en HTML*/
+    const getName = async () =>{
+        try{
+            const request = await fetch('api.txt')
+            const response = await request.json()
+
+            let name = document.createElement('div')
+            name.classList.add('name-div')
+            name.innerHTML = `${response.name}`
+            container.appendChild(name)
+        }catch(e){
+            console.error(e)
+            container.classList.add('red')
+        }
+    }
+
+    /** Obtiene la edad y la renderiza en HTML*/
+    const getAge = async () =>{
+        try{
+            const request = await fetch('api.txt')
+            const response = await request.json()
+
+            let age = document.createElement('div')
+            age.classList.add('age-div')
+            age.innerHTML = `${response.age}`
+            container.appendChild(age)
+        }catch(e){
+            console.error(e)
+            container.classList.add('red')
+        }
+    }
+</script>

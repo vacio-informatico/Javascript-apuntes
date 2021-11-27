@@ -1,0 +1,80 @@
+<style>
+    *{margin: 0; padding: 0; box-sizing: border-box;}
+    body{
+        font-family:  monospace;
+        background-color: #2f4f4f;
+        padding: 5vw; 
+        display: grid; grid-template-columns: 30% 70%;
+    }
+    .btn{
+        background-color: #6495ed;
+        font-size: 1em;
+        border: none;
+        border-radius: 1px;
+        cursor: pointer;
+        width: 10rem;
+        padding: .5rem;
+        display: inline-block;
+        align-self: center;
+    }
+    .btn:hover{
+        background-color: rgba(100, 148, 237, 0.337);
+    }
+    .container{
+        background-color: rgba(100, 148, 237, 0.337);
+        border-radius: 10px;
+        padding: .5rem;
+        font-size: 1.2rem;
+        display: inline-block;
+        text-align: center;
+        align-self: center;
+    }
+    span{
+        display: inline-block;
+    }
+</style>
+<!-- HTML-->
+<title>Fetch API</title>
+<body>
+    <button class="btn" id="btn">Obtener datos</button>
+    <div class="container"></div>
+
+</body>
+
+<script>
+    //{
+      //  "aprovados": 12,
+        //"desaprovados": 10 
+    //}
+    document.getElementById('btn').addEventListener('click', () => getInfo())
+
+    /** 
+    * Obtiene la informacion del servidor y ejecuta la funcion para renderizar
+    */
+    const getInfo = async () =>{
+        try{
+            const infoApi = await fetch('API.txt')
+            renderInfo(await infoApi.json())
+        }catch(e){
+            console.error(e)
+            renderInfo({
+                aprovados: "La API fallo",
+                desaprovados: "La API fallo"
+            })
+        }
+        console.log(infoApi)
+    }
+    /**
+     * Renderiza los datos en HTML
+     * @param {Json} info Es la informacion a renderizar
+     */
+    const renderInfo = (info) =>{
+        let container = document.querySelector('.container')
+        const HTML = `
+            <h2>Aprovados : <span>${info.aprovados}</span></h2>
+            <h2>Desaprovados : <span>${info.desaprovados}</span></h2>
+        `
+        container.innerHTML = HTML
+    }
+    
+</script>

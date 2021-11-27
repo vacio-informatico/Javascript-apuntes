@@ -1,0 +1,57 @@
+<html>
+    <body>
+        <form>
+            <input type="text" id="name" placeholder="Nombre" required>
+            <input type="email" id="email" required>
+            <input type="text" id="theme" required>
+            <input type="submit" value="Solicitar mesa" id="btn-send">
+        </form>
+        <div class="result"></div>
+    </body>
+</html>
+
+<script>
+    const name = document.getElementById('name')
+    const email = document.getElementById('email')
+    const theme = document.getElementById('theme')
+    const btn = document.getElementById('btn-send')
+    const divResult = document.querySelector('.result')
+
+    btn.addEventListener('click', (e)=>{
+        e.preventDefault()// Previene el comportamiento por defecto
+
+        let error = validForm()
+        if(error[0]){
+            divResult.innerHTML = error[1]
+            divResult.classList.add('error')
+        } else{
+            divResult.innerHTML = 'Solicitud enviada'
+            divResult.classList.add('send')
+            divResult.classList.remove('error')
+        }
+    })
+    /** 
+    * Valida los datos del formulario
+    * @return {array} 
+    */
+    const validForm = ()=>{
+        /** @type {Array[Booleano, String]}*/
+        let error = []
+
+        if(name.value.length < 5 || name.value.length > 12){
+            error[1] = true
+            error[1] = "Nombre invalido"
+            return error
+        } else if(email.value.length < 12 || email.value.length > 25 || 
+                email.value.indexOf('@') == -1 || email.value.indexOf('.') == -1){
+                error[0] = true
+                error[1] = 'El meil no es valido'
+                return error
+        } else if(email.value.length < 4 || email.value.length > 15){
+                error[0] = true
+                error[1] = 'Las asignaturas son invalidas'
+                return error
+        }
+        return error[0] = false
+    }
+</script>

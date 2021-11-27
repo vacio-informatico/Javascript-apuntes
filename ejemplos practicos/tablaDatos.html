@@ -1,0 +1,57 @@
+<body>
+    <div class="grid-container">
+        
+    </div>
+    <button id="send">Confirmar</button>
+</body>
+
+<script>
+    const alumns = [
+    {
+        name: "jack",
+        email: "jack@gmail.com",
+        theme: "matematicas, fisica"
+    },{
+        name: "mary",
+        email: "mary@gmail.com",
+        theme: "matematicas, biolagia 1"
+    }
+    ]
+
+    let renderHTML = ''
+
+    for(alumn in alumns){
+        let date = alumns[alumn]
+        
+        let name = date['name']
+        let email = date['email']
+        let theme = date['theme'] 
+
+        renderHTML += ` 
+            <div class="name">${name}</div>
+            <div class="email">${email}</div>
+            <div class="theme">${theme}</div>
+            <div class="week"> 
+                <select id="week-select">
+                    <option value="1"> Semana 1</option>
+                    <option value="2"> Semana 2</option>
+                </select>
+            </div> 
+        `
+    }
+    document.querySelector('.grid-container').innerHTML = renderHTML
+
+    const btnSubmit = document.getElementById('send')
+    btnSubmit.addEventListener('click', () =>{
+        let confirmSend = confirm('Deseas enviar?')
+        if(confirmSend){
+            const elements = document.querySelectorAll('.week')
+            const weekSelect = document.querySelectorAll('#week-select')
+            for(element in elements){
+                let week = elements[element]
+                week.innerHTML = weekSelect[element].value
+            }
+        }
+        console.info("sending!")
+    })
+</script>
