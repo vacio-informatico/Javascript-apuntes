@@ -1,14 +1,14 @@
 v a c i o - i n f o r m a t i c o
 ====
-*Creado por: vacio-informatico* | [Github]("https://github.com/vacio-informatico/")<br>
-[vacio-informatico sitio web]("https://vacio-informatico.github.io/v-i/") <br>
-*Instagram:* [@vacio_informatico]("")
+*Creado por: vacio-informatico* | [Github](https://github.com/vacio-informatico/)<br>
+[vacio-informatico sitio web](https://vacio-informatico.github.io/v-i/) <br>
+*Instagram:* [@vacio_informatico](instagram.com/vacio_informatico/)
 
 # Apunte Javascript
 
 Este repositorio contiene principalmente un archivo llamado *apunte-2.md*, el cual contiene el temario y los ejemplos dados en el curso de javascript MID-Leven de [@Soydalto](https://www.youtube.com/c/soydalto) en YouTube.
 
-    Avisó de ante mano que este contendrá seguramente más de un error ortográfico, esto debido a que lo redacte mientras hacia el curso, puedes re subir el contenido, en caso de que quieras corregirlo. 
+    Avisó de ante mano que este contendrá seguramente más de un error ortográfico, esto debido a que lo redacte mientras hacia el curso, puedes re subir el contenido, en caso de que quieras corregirlo. <br>
     Apunte.md tiene más de 650 lineas escritas.
 
 ## Semántica usada en los ejemplos prácticos
