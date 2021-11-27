@@ -2,7 +2,7 @@ v a c i o - i n f o r m a t i c o
 ====
 *Creado por: vacio-informatico* | [Github](https://github.com/vacio-informatico/)<br>
 [vacio-informatico sitio web](https://vacio-informatico.github.io/v-i/) <br>
-*Instagram:* [@vacio_informatico](instagram.com/vacio_informatico/)
+*Instagram:* [@vacio_informatico](https://www.instagram.com/vacio_informatico/)
 
 # Apunte Javascript
 
