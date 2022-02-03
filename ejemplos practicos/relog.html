@@ -1,0 +1,50 @@
+<style>
+    ul{
+        border-bottom: #000 1px solid;
+        position: absolute;
+        padding: 1rem .5rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    li{
+        text-align: center;
+        font-size: 2rem;
+        list-style: none;
+        margin: .2rem;
+        display: inline-block;
+    }
+</style>
+<!-- HTML-->
+<title>Relog</title>
+<body>
+    <ul class="watch">
+        <li class="hour"></li><li>:</li>
+        <li class="min"></li><li>:</li>
+        <li class="sec"></li>
+    </ul>
+</body>
+
+<script> "use strict";
+    const addZeros = n =>{
+        if(n.toString().length < 2) return "0".concat(n)
+        return n
+    }
+
+    const update = () =>{
+        const time = new Date()
+        let hour = addZeros(time.getHours())
+        let minutes = addZeros(time.getMinutes())
+        let seccons = addZeros(time.getSeconds())
+
+        viewTime(hour, minutes, seccons)
+    }
+
+    const viewTime = (...date) =>{
+        document.querySelector('.hour').innerHTML = date[0]
+        document.querySelector('.min').innerHTML = date[1]
+        document.querySelector('.sec').innerHTML = date[2]
+    }
+    update()
+    setInterval(update, 1000) //Ya no se usa
+</script>

@@ -1,0 +1,204 @@
+<style>
+    body{margin: 0; padding: 0; box-sizing: border-box;}
+    .nav-container{
+        margin: .5rem;
+    }
+    .nav{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: end;
+    }
+    .btn{
+        background: #ddd;
+        border: transparent;
+        padding: .5em;
+        margin: 0 .2em;
+    }
+    .btn:hover{
+        background: #999;
+        cursor: pointer;
+    }
+    .main{
+        display: grid;
+        grid-template-columns: 100%;
+    }
+    .zone {
+        border: 4px dashed #888;
+        color: #888;
+        text-align: center;
+        font-size: 1.2rem;
+        display: grid;
+        justify-self: center;
+        width: 65%;
+        height: 20vw;
+        box-sizing: border-box;
+        padding: 1rem;
+        margin: 1.5rem .5rem;
+    }
+    .zone .text{
+        align-self: center;
+        justify-self: center;
+    }
+    .result{
+        text-align: center;
+        justify-self: center;
+        padding: 1rem;
+    }
+    .result > * {
+        justify-self: center;
+    }
+    img, video{
+        width: 50%;
+        margin: auto;
+    }
+    #container-video{
+        position: relative;
+        display: grid;
+        gap: .5em;
+        justify-items: center;
+    }
+    .btn-video{
+        align-self:flex-end;
+        position: absolute;
+        z-index: 1;
+        margin-bottom: .5rem;
+    }
+</style>
+<!-- HTML-->
+<title>Multimedia</title>
+<body>
+    <header class="nav-container">
+        <nav class="nav">
+            <button class="btn" id="txt">Textos</button>
+            <button class="btn" id="img">Imagenes</button>
+            <button class="btn" id="vid">Videos</button>
+        </nav>
+    </header>
+    <main class="main" id="main">
+        
+    </main>
+</body>
+
+<script> "mode-strict";
+    const textBtn = document.getElementById('txt')
+    textBtn.addEventListener('click', () =>{
+        renderZoneHTML(1)
+        const zone = new Zone()
+        zone.event(loadFile)
+
+    })
+    const photoBtn = document.getElementById('img')
+    photoBtn.addEventListener('click', () =>{
+        renderZoneHTML(1)
+        const zone = new Zone()
+        zone.event(loadImg)
+    })
+    const videoBtn = document.getElementById('vid')
+    videoBtn.addEventListener('click', () =>{
+        renderZoneHTML(1)
+        const zone = new Zone()
+        zone.event(loadVideo)
+    })
+
+    const renderZoneHTML = (state)=>{
+        const HTML = `
+            <div class="progress-bar" id="progress-bar"></div>
+            <header class="zone" id="zone"><div class="text">Suelte aqui su archivo</div></header>
+            <footer class="result" id="result"></footer>
+        `
+        state == 1 ? document.getElementById('main').innerHTML = HTML  : document.getElementById('main').innerHTML = '' 
+    }
+    class Zone{
+        constructor(){
+            this.zone = document.getElementById('zone')
+        }
+        event(callback){
+            this.zone.addEventListener('dragover', (e) =>{
+                e.preventDefault()
+                this.changeStyle(zone, '#888')
+            })
+            this.zone.addEventListener('drop', (e) =>{
+                e.preventDefault()
+                callback(e.dataTransfer.files[0])
+                this.changeStyle(zone, '#000')
+            })
+        }
+        changeStyle(obj, color){
+            obj.style.color = color
+            color === '#888' ? 
+            (obj.style.border = `4px dashed ${color}`, document.querySelector('.text').textContent = 'Suelte su archivo') :
+            (obj.style.border = `4px solid ${color}`, document.querySelector('.text').textContent = 'Su archivo fue cargado con exito!')
+    }
+    }
+
+    const loadFile = (ar) =>{
+        const reader = new FileReader()
+        reader.readAsText(ar)
+        reader.addEventListener('load', e =>{
+            document.getElementById('result').textContent = e.currentTarget.result
+        })
+    }
+    const loadImg = (ar) =>{
+        const reader = new FileReader()
+
+        reader.readAsDataURL(ar)
+        reader.addEventListener('load', e =>{
+            let url = URL.createObjectURL(ar)
+            let img = document.createElement('IMG')
+            img.setAttribute('src', url)
+            document.getElementById('result').appendChild(img)
+        })
+    }
+    const loadVideo = (ar) =>{
+        const reader = new FileReader()
+        const pause = document.createElement('button')
+        pause.setAttribute('id', 'pause')
+        pause.classList.add('btn', 'btn-video')
+
+        reader.readAsArrayBuffer(ar)
+        reader.addEventListener('progress', e =>{
+            let change = Math.round(e.loaded / ar.size * 100)
+            document.querySelector('.text').textContent = `${change}%` 
+            console.log(change)
+        })
+        reader.addEventListener('load', e =>{
+            let videoFormat = new Blob([new Uint8Array(e.currentTarget.result)], {tipe: 'video/mp4'})
+            let url = URL.createObjectURL(videoFormat)
+
+            let video = document.createElement('div')
+            video.setAttribute('id', 'container-video')
+            video.innerHTML = `
+                <video autoplay="true" id="video">
+                    <source src="${url}">
+                </video>
+            `
+            /*
+            let source = document.createElement('source')
+            let video = document.createElement('video')
+            video.setAttribute('autoplay', true)
+            video.setAttribute('id', 'video')
+            source.setAttribute('src', url)
+            video.appendChild(source)
+            video.appendChild(pause)
+            */
+
+            document.getElementById('result').appendChild(video)
+            document.getElementById('container-video').appendChild(pause)
+            pause.textContent = 'Pausar video'
+             
+        })
+            pause.addEventListener('click', () =>{
+                const video = document.getElementById('video')
+                    if(video.paused ){
+                        video.play()
+                        pause.textContent = 'Pausar video'
+                    }
+                    else {
+                        video.pause()
+                        pause.textContent = 'Despausar video'
+                    }
+            })
+        
+    }
+</script>

@@ -1,0 +1,66 @@
+<style>
+    .textures{
+        width: 100%;
+        height: 12rem; 
+        user-select: none;
+    }
+    .textures div{
+        user-select: all;
+        width: 10rem;
+        height: 10rem;
+        margin: .5rem;
+        box-sizing: border-box;
+        display: inline-block;
+        object-fit: contain;
+    }
+    .texture-1{
+        background: url("texture-1.jpg") 100% no-repeat;
+    }
+    .texture-2{
+        background: url("texture-2.jpg") 100% no-repeat;
+    }
+    .texture-3{
+        background: url("./texture-3.jpg") 100% no-repeat;
+    }
+    .texture-4{
+        background: url("./texture-4.jpg") 100% no-repeat;
+    }
+    .zone{
+        width: 80vw;
+        height: 120vh;
+        background: #666;
+        object-fit: contain;
+    }
+</style>
+
+<!-- HTML-->
+<title>Texturas</title>
+<body>
+    <header class="textures">
+        <div class="texture-1"></div>
+        <div class="texture-2"></div>
+        <div class="texture-3"></div>
+        <div class="texture-4"></div>
+    </header>
+    <section class="zone" id="zone"></section>
+</body>
+
+<script> "use strict";
+    const zone = document.getElementById('zone');
+    zone.addEventListener('dragover', (e) => e.preventDefault())
+    zone.addEventListener('drop', (e) =>{
+        let n = e.dataTransfer.getData('texture')
+        console.log("drop", n)
+        zone.style.background = `url("./texture-${n}.jpg") 100% no-repeat`
+    })
+    
+    for(let i =1; i <= document.querySelector('.textures').children.length; i++){
+        console.log(i)
+        document.querySelector(`.texture-${i}`).addEventListener('dragstart', (e) => loadTexture(i, e))
+    }
+
+    const loadTexture = (n, e) =>{
+        console.log(e)
+        e.dataTransfer.setData('texture', n)
+    }
+</script>
